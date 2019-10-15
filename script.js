@@ -9,12 +9,12 @@ window.addEventListener("load", function () {
       if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "") {
          alert("All fields are required");
          event.preventDefault();
-      } else if (/[0-9]/.test(pilotName.value) === true) {
-         alert("Enter valid Pilot name");
-         event.preventDefault();
-      } else if (/[a-z]/i.test(copilotName.value) === false) {
-         alert("Enter valid Co-pilot name");
-         event.preventDefault();
+         } else if (pilotName.value.match(/[0-9]/) !== null) {
+            alert("Enter valid Pilot name");
+            event.preventDefault();
+         } else if (copilotName.value.match(/[0-9]/) !== null) {
+            alert("Enter valid Co-pilot name");
+            event.preventDefault();
       } else if (isNaN(fuelLevel.value) === true) {
          alert("Enter valid number for Fuel Level");
          event.preventDefault();
