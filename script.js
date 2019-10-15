@@ -9,12 +9,12 @@ window.addEventListener("load", function () {
       if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "") {
          alert("All fields are required");
          event.preventDefault();
-      // } else if (isNaN(pilotName.value) === false) {
-      //    alert("Enter valid Pilot name");
-      //    event.preventDefault();
-      // } else if (isNaN(pilotName.value) === false) {
-      //    alert("Enter valid Co-pilot name");
-      //    event.preventDefault();
+      } else if (/[0-9]/.test(pilotName.value) === true) {
+         alert("Enter valid Pilot name");
+         event.preventDefault();
+      } else if (/[a-z]/i.test(copilotName.value) === false) {
+         alert("Enter valid Co-pilot name");
+         event.preventDefault();
       } else if (isNaN(fuelLevel.value) === true) {
          alert("Enter valid number for Fuel Level");
          event.preventDefault();
@@ -42,7 +42,26 @@ window.addEventListener("load", function () {
             event.preventDefault();
          }
       }
+
    });
+
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function (response) {
+      response.json().then(function (json) {
+         let x = json[Math.floor(Math.random() * 6)];
+         document.getElementById("missionTarget").innerHTML = `
+         <h2>Mission Destination</h2>
+      <ol>
+         <li>Name: ${x.name}</li>
+         <li>Diameter: ${x.diameter}</li>
+         <li>Star: ${x.star}</li>
+         <li>Distance from Earth: ${x.distance}</li>
+         <li>Number of Moons: ${x.moons}</li>
+      </ol>
+      <img src="${x.image}"></img>
+         `
+      })
+   });
+
 });
 
 
