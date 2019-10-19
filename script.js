@@ -24,25 +24,31 @@ window.addEventListener("load", function () {
       } else {
          document.getElementById("pilotStatus").innerHTML = `Pilot ${pilotName.value} is ready.`;
          document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilotName.value} is ready.`;
-         if (fuelLevel.value < 10000) {
+         if (fuelLevel.value < 10000 || cargoMass.value > 10000) {
             document.getElementById("faultyItems").style.visibility = "visible";
             document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch.";
             document.getElementById("launchStatus").style.color = "red";
-            document.getElementById("fuelStatus").innerHTML = "Not enough fuel.";
             event.preventDefault();
-         } else if (cargoMass.value > 10000) {
-            document.getElementById("faultyItems").style.visibility = "visible";
-            document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch.";
-            document.getElementById("launchStatus").style.color = "red";
-            document.getElementById("cargoStatus").innerHTML = "Cargo is too heavy.";
-            event.preventDefault();
-         } else {
+         } else if (fuelLevel.value >= 10000 && cargoMass.value <= 10000) {
             document.getElementById("launchStatus").innerHTML = "Shuttle is ready for launch.";
             document.getElementById("launchStatus").style.color = "green";
             event.preventDefault();
          }
+         if (fuelLevel.value < 10000) {
+            document.getElementById("fuelStatus").innerHTML = "Not enough fuel.";
+            event.preventDefault();
+         } else if (fuelLevel.value >= 10000) {
+            document.getElementById("fuelStatus").innerHTML = "Fuel level high enough for launch";
+            event.preventDefault();
+         }
+         if (cargoMass.value > 10000) {
+            document.getElementById("cargoStatus").innerHTML = "Cargo is too heavy.";
+            event.preventDefault();
+         } else if (cargoMass.value <= 10000) {
+            document.getElementById("cargoStatus").innerHTML = "Cargo mass low enough for launch";
+            event.preventDefault();
+         }
       }
-
    });
 
    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function (response) {
